@@ -2,11 +2,11 @@ us census 1994
 ========
 (Better read this text RAW)
 
-US Census (1994) data analysis. Prediction of income (> or &lt; $50.000).
+<h2>US Census (1994) data analysis. Prediction of income (> or &lt; $50.000).</h2>
 
 ===
 
-1st method
+<b>1st method</b>
 
 We keep all continued variables as is. The discrete ones are transformed into dummy variables and excluded (the discrete versions).
 
