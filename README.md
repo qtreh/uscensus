@@ -1,7 +1,8 @@
 us census 1994
 ========
+(Better read this text RAW)
 
-US Census (1994) data analysis. Prediction of income (> or &lt; $50.000)
+US Census (1994) data analysis. Prediction of income (> or &lt; $50.000).
 
 ===
 
@@ -9,11 +10,14 @@ US Census (1994) data analysis. Prediction of income (> or &lt; $50.000)
 
 We keep all continued variables as is. The discrete ones are transformed into dummy variables and excluded (the discrete versions).
 
-We take 5000 samples. 
+We take 5000 samples:
 - 1000 of them are kept to train our predictors: logistic regression and random forest. 
 - To do some testing, 700 of them were taken (possibly the same, but the ratio seems low enough to prevent overfitting).
 
 
+<b>2nd method</b>
+
+Coming soon.
 
 
 
