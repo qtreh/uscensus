@@ -6,11 +6,35 @@ training.pop <- dim(training)[1]
 
 # Index des variables continues
 contVars <- c(1,6,17,18,19,31,40)
-# Index de la variables weight (à ignorer d'après le manuel metadata)
+# Index de la variables weight (à ignorer d'après le fichier census_income_metadata)
 weightIndex <- 25
 
 # Donne des informations générales sur chaque variable
 summary(training)
+
+# Exploration des variables continues
+# Cf le fichier census_income_metadata pour savoir à quoi correspondent les numéros des variables
+for(i in contVars)
+{
+	aze <- summary(training[,i])
+	print(paste("Attribute #",(i-1),sep=""))
+	print(aze)
+	#boxplot(training[,i],data=training)
+}
+
+# Exploration des variables nominales 
+for(i in (1:42)[-c(contVars,weightIndex )])
+{
+	Vfreq <- as.data.frame(table(training[,i]), responseName="Freq")
+	Vfreq <- Vfreq [order(Vfreq$Freq,decreasing=TRUE),]
+	Vfreq$Freq <- (Vfreq$Freq*100)/training.pop
+	print(paste("Attribute #",(i-1),sep=""))
+	print(Vfreq)
+}
+
+
+
+# Désormais inutile
 
 Vfreq <- as.data.frame(table(training$V2), responseName="Freq")
 Vfreq <- Vfreq [order(Vfreq$Freq,decreasing=TRUE),]
