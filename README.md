@@ -48,7 +48,12 @@ We take 5000 samples:
 - 1000 of them are kept to train our predictors: logistic regression and random forest. 
 - To do some testing, 700 of them were taken (possibly the same, but the ratio seems low enough to prevent overfitting).
 
-Not tested on the "testing" dataset, but you can find cross validation results in 'uscensus/Results'.
+Not tested on the "testing" dataset, but here are the cross validation results:
+            Sensitivity : 0.9919          
+            Specificity : 0.2026          
+         Pos Pred Value : 0.9502          
+         Neg Pred Value : 0.6200          
+      Balanced Accuracy : 0.5973 
 
 
 <h5>2nd method</h5>
@@ -98,9 +103,17 @@ Note: 'Positive class' here is '-50000'.
 
 We can see that the prediction tree here always predicts '-50000', it's not very effective. The other algorithms do relatively well, especially SVM. Its 'specificity' score is quite good, that means it manages to get a lot (50%...) of 50000+ right, even though they are rare.
 
-If we test the predictor against the entire dataset (incl. wage=0) we naturally get a lower balanced accuracy, about 60% for random forest and logistic regression and 63% for SVM (here again, prediction tree doesn't predict 50000+).
+If we test the predictor against the entire training dataset (incl. wage=0) we naturally get a lower 'balanced accuracy', about 60% for random forest and logistic regression and 63% for SVM (here again, prediction tree doesn't predict 50000+). 
 
-
+If we test it against the testing dataset (incl. wage=0) we get the following result. While it's quite reliable for specificity, the algorithm still makes many mistakes.
+            Sensitivity : 0.93875         
+            Specificity : 0.89011         
+         Pos Pred Value : 0.99989         
+         Neg Pred Value : 0.01309         
+             Prevalence : 0.99909         
+         Detection Rate : 0.93789         
+   Detection Prevalence : 0.93799         
+      Balanced Accuracy : 0.91443 
 
 
 <h5>3rd method</h5>
@@ -108,12 +121,14 @@ If we test the predictor against the entire dataset (incl. wage=0) we naturally 
 - Delete (class work == Not in universe) instead of (hourly wage == 0). Maybe it will suffice to delete the population which did not answered for the wage, and keep those who answered 0 (note: unpaid and not working people are categories of "work class").
 - Reintroduce variable capital losses: a variable analysis shows that 50000+ population has larger losses than 50000- population. Doing capital gains minus losses could lead to values close to zero, misclassifying them to 50000-. But an individual with gains and losses, even if they balance, has more chance to be in the 50000+ category.
 
-Balanced accuracy with SVM polynomial kernel (3rd degree) : 0.5969 ==> This performance is behind the 2nd method (without hourly wage=0 rows).
+Balanced accuracy with SVM polynomial kernel (3rd degree) : 0.5504  ==> This performance is behind the 1st and 2nd method (without hourly wage=0 rows). It is a worse performance than without any change to the variables (except the insertion of dummy variables).
+If we use the same predictor against a dataset which includes the (class work == Not in universe) deleted in the training step, we obtain: 0.5542. 
 
 
 <h5>Conclusion</h5>
 
 The 2nd method has a good efficiency but it does not adress every row of the testing set. As seen in the 3rd method, when we take every wage in parameter, that leads to a high bias that other variables tuning doesn't help to reduce. Again, 95% of hourly wage at zero looks suspicious. 
+63% is the better score I got, with method 2, trained with hourly wage >0, tested against the whole dataset.
 
 
 
