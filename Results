@@ -25,6 +25,7 @@ Prediction   - 50000.  50000+.
          Detection Rate : 0.9057          
    Detection Prevalence : 0.9414          
       Balanced Accuracy : 0.6841 
+       'Positive' Class :  - 50000.  
 
 ######################################################
 Random forest, 1st method, trained on 1000 samples
@@ -51,3 +52,117 @@ Prediction   - 50000.  50000+.
          Detection Rate : 0.9343          
    Detection Prevalence : 0.9743          
       Balanced Accuracy : 0.6636 
+       'Positive' Class :  - 50000.  
+
+######################################################
+Logistic regression, 2nd method, trained on 1000 samples
+> confusionMatrix(prediction,cv[1:1000,146])
+
+           Reference
+Prediction   - 50000.  50000+.
+   - 50000.       927       36
+   50000+.         22       15
+                                          
+               Accuracy : 0.942           
+                 95% CI : (0.9257, 0.9557)
+    No Information Rate : 0.949           
+    P-Value [Acc > NIR] : 0.85892         
+                                          
+                  Kappa : 0.3114          
+ Mcnemar's Test P-Value : 0.08783         
+                                          
+            Sensitivity : 0.9768          
+            Specificity : 0.2941          
+         Pos Pred Value : 0.9626          
+         Neg Pred Value : 0.4054          
+             Prevalence : 0.9490          
+         Detection Rate : 0.9270          
+   Detection Prevalence : 0.9630          
+      Balanced Accuracy : 0.6355       
+       'Positive' Class :  - 50000.  
+
+######################################################
+Random forest, 2nd method, trained on 1000 samples
+> confusionMatrix(prediction,cv[1:1000,146])
+
+           Reference
+Prediction   - 50000.  50000+.
+   - 50000.       941       38
+   50000+.          8       13
+                                          
+               Accuracy : 0.954           
+                 95% CI : (0.9391, 0.9661)
+    No Information Rate : 0.949           
+    P-Value [Acc > NIR] : 0.263           
+                                          
+                  Kappa : 0.3415          
+ Mcnemar's Test P-Value : 1.904e-05       
+                                          
+            Sensitivity : 0.9916          
+            Specificity : 0.2549          
+         Pos Pred Value : 0.9612          
+         Neg Pred Value : 0.6190          
+             Prevalence : 0.9490          
+         Detection Rate : 0.9410          
+   Detection Prevalence : 0.9790          
+      Balanced Accuracy : 0.6232            
+       'Positive' Class :  - 50000. 
+
+######################################################
+SVM Polynomial Kernel (3°), 2nd method, trained on 1000 samples
+> confusionMatrix(prediction,cv[1:1000,146])
+
+           Reference
+Prediction   - 50000.  50000+.
+   - 50000.       947       45
+   50000+.          2        6
+                                         
+               Accuracy : 0.953          
+                 95% CI : (0.938, 0.9653)
+    No Information Rate : 0.949          
+    P-Value [Acc > NIR] : 0.3132         
+                                         
+                  Kappa : 0.1922         
+ Mcnemar's Test P-Value : 8.993e-10      
+                                         
+            Sensitivity : 0.9979         
+            Specificity : 0.1176         
+         Pos Pred Value : 0.9546         
+         Neg Pred Value : 0.7500         
+             Prevalence : 0.9490         
+         Detection Rate : 0.9470         
+   Detection Prevalence : 0.9920         
+      Balanced Accuracy : 0.5578  
+
+
+######################################################
+Decision tree, 2nd method, trained on 1000 samples
+
+> confusionMatrix(prediction,cv[1:1000,146])
+
+           Reference
+Prediction   - 50000.  50000+.
+   - 50000.       949       51
+   50000+.          0        0
+                                          
+               Accuracy : 0.949           
+                 95% CI : (0.9335, 0.9618)
+    No Information Rate : 0.949           
+    P-Value [Acc > NIR] : 0.5372          
+                                          
+                  Kappa : 0               
+ Mcnemar's Test P-Value : 2.534e-12       
+                                          
+            Sensitivity : 1.000           
+            Specificity : 0.000           
+         Pos Pred Value : 0.949           
+         Neg Pred Value :   NaN           
+             Prevalence : 0.949           
+         Detection Rate : 0.949           
+   Detection Prevalence : 1.000           
+      Balanced Accuracy : 0.500           
+       'Positive' Class :  - 50000.   
+
+
+
+
