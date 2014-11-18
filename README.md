@@ -16,7 +16,35 @@ We take 5000 samples:
 
 <b>2nd method</b>
 
-Coming soon.
+The 'hourly wage' variable is a huge bias. 95% of the dataset has 0$ as a wage, which is highly improbable. Thus, in a second method, I take only the rows where it is not zero. But it is a bias as well, that does not represent jobless people. The logistic regression predictor seems to overcome that second bias: its accuracy stands when we try it against original data (with a lot of hourly wage = 0). Excluding those rows leaves about 11.000 rows.
+
+We can also see that if we try to exclude people who answered 'Not in universe' for 'Class of worker' variable from the previous restrained dataset, nothing happens: all were already deleted in the previous operation.
+
+The following variables seem not relevant enough, so they were deleted to reduce noise: 39 (year), 11 (hispanic origin, 'race' is enough), 2 et 3 (recode), 20/21 (previous area), # 28 (migr sunbelt), 24/25/26 (migration code), 27 (in house for 1yr), 36 (veterans quest, 'veterans' benfits is enough).
+
+The country of birth led to multiple dummy variables (high noise). It's preferable to simplify it. V31 has been transformed into a scoring continue variable : 1 point for each family member (self, mother and father) who was born in the US. The idea is to represent the attach the family has to the country, if the family immigrated recently or is american since more than one generation.
+
+Capital gains et losses were reduced to only one variable: (V16 - V17)
+
+Dividends were transformed into a nominal variable (0 or 1). Usually, receiving dividends or not can be seen as a sufficient indicator, so it was transformed to avoid noise.
+
+Every nominal variable was transformed into dummy variable, and the original were deleted, like in the 1st method. A small subset of these dummy variables had to be deleted: it was not present in the testing dataset. However, those variables concerned some family ties with a householder, when it was a grandchild, so it was anecdotic enough.
+
+We then take the first 1000 samples (which were previously shuffled) and use them to train 4 predictors : logistic regression, SVM polynomial kernel degree 3, random forest, prediction tree. It had to limited to 1000 samples due to computer limitations.
+
+The cross-validated results can be seen in detail in the file 'uscensus/Results'. For the testing operation, we have to consider two cases: test the predictor with 'hourly wage>0' testing data only or not. 
+
+hourly wage>0
+If we restrict on those who had a hourly wage superior to zero, we have the following results:
+<table>
+<tr>
+  <th>Logistic regression</th><th>0.9651</th>
+</tr>
+</table>
+
+
+
+
 
 
 
