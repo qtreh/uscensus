@@ -10,7 +10,7 @@ for(i in 1:41)
 }
 
 # VARIABLES MODIFIEES
-# Supprimer : 39 (année), 11 (hispanic origin), 2 et 3 (recode), 20/21 (previous area),
+# Supprime : 39 (année), 11 (hispanic origin), 2 et 3 (recode), 20/21 (previous area),
 # 28 (migr sunbelt), 24/25/26 (migration code), 27 (in house for 1yr), 36 (veterans quest)
 # V16 <- V16 - V17
 # 31/32/33 => count(US) => nouvelle variable score entre 0 et 3 pour l'immigration
