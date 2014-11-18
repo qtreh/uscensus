@@ -38,7 +38,10 @@ hourly wage>0
 If we restrict on those who had a hourly wage superior to zero, we have the following results:
 <table>
 <tr>
-  <th>Logistic regression</th><th>0.9651</th>
+  <th></th><th>Logistic regression</th><th>Random forest</th>
+</tr>
+<tr>
+  <th>Sensitivity</th><th>0.9651</th><th>0.9566</th>
 </tr>
 </table>
 
