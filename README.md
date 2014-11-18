@@ -1,4 +1,4 @@
-us census 1994
+US Census 1994
 ========
 
 <h4>US Census (1994) data analysis. Prediction of income (> or &lt; $50.000).</h4>
@@ -6,14 +6,15 @@ us census 1994
 ===
 
 <h5>Income>$50.000: insights from original variables</h5>
+
 I first tried two restrictions based on my instinct:
 - Hourly wage > 0 ==> It showed more 50000+
-- Dividends > 0 ==> It showed much more 50000+
+- Dividends > 0 ==> It showed even much more 50000+
 
 We can be more exhaustive by comparing the -50000/50000+ rows for each variable. 'varExplo.r' not only generates statistics for each variable, but also by separating the two cases +/-50000. Note that the values for 50.000- are close to the values for the general dataset, as it represents 95% of the population. Here is a table with the mean for continued variables.
 <table>
 <tr>
-  <th></th><th>50.000-</th><th>50.000+</th>
+  <th></th><th>-50.000</th><th>50.000+</th>
 </tr>
 <tr>
   <th>Age</th><th> 33.72</th><th> 46.27 </th>
@@ -47,7 +48,7 @@ We take 5000 samples:
 - 1000 of them are kept to train our predictors: logistic regression and random forest. 
 - To do some testing, 700 of them were taken (possibly the same, but the ratio seems low enough to prevent overfitting).
 
-Results incoming.
+Not tested on the "testing" dataset, but you can find cross validation results in 'uscensus/Results'.
 
 
 <h5>2nd method</h5>
@@ -102,17 +103,22 @@ If we test the predictor against the entire dataset (incl. wage=0) we naturally 
 
 
 
-
-
-
 <h5>3rd method</h5>
+
 - Delete (class work == Not in universe) instead of (hourly wage == 0). Maybe it will suffice to delete the population which did not answered for the wage, and keep those who answered 0 (note: unpaid and not working people are categories of "work class").
 - Reintroduce variable capital losses: a variable analysis shows that 50000+ population has larger losses than 50000- population. Doing capital gains minus losses could lead to values close to zero, misclassifying them to 50000-. But an individual with gains and losses, even if they balance, has more chance to be in the 50000+ category.
 
-Results incoming
+Balanced accuracy with SVM polynomial kernel (3rd degree) : 0.5969 ==> This performance is behind the 2nd method (without hourly wage=0 rows).
 
 
-=== Extract from census_income_metadata.txt ===
+<h5>Conclusion</h5>
+
+The 2nd method has a good efficiency but it does not adress every row of the testing set. As seen in the 3rd method, when we take every wage in parameter, that leads to a high bias that other variables tuning doesn't help to reduce. Again, 95% of hourly wage at zero looks suspicious. 
+
+
+
+
+<h5>=== Extract from census_income_metadata.txt ===</h5>
 
 <br/>Variables being manipulated in R files.
 <br/>Warning 1: There is an additional 25th variable in the original dataset, which represents the weight and is ignored when doing the prediction job.
