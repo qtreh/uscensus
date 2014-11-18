@@ -5,7 +5,41 @@ us census 1994
 
 ===
 
-<b>1st method</b>
+<h5>Income>$50.000: insights from original variables</h5>
+I first tried two restrictions based on my instinct:
+- Hourly wage > 0 ==> It showed more 50000+
+- Dividends > 0 ==> It showed much more 50000+
+
+We can be more exhaustive by comparing the -50000/50000+ rows for each variable. 'varExplo.r' not only generates statistics for each variable, but also by separating the two cases +/-50000. Note that the values for 50.000- are close to the values for the general dataset, as it represents 95% of the population. Here is a table with the mean for continued variables.
+<table>
+<tr>
+  <th></th><th>50.000-</th><th>50.000+</th>
+</tr>
+<tr>
+  <th>Age</th><th> 33.72</th><th> 46.27 </th>
+</tr>
+<tr>
+  <th>Hourly wage</th><th> 53.69</th><th>81.64</th>
+</tr>
+<tr>
+  <th>Capital gains</th><th> 143.8</th><th>4831</th>
+</tr>
+<tr>
+  <th>Capital losses</th><th> 27</th><th> 193.1</th>
+</tr>
+<tr>
+  <th>Dividends</th><th>107.8</th><th>1553</th>
+</tr>
+<tr>
+  <th>Fam. members under 18</th><th> 1.821</th><th>4.004</th>
+</tr>
+<tr>
+  <th>Weeks worked in yr</th><th> 21.53 </th><th>48.07 </th>
+</tr>
+</table>
+
+
+<h5>1st method</h5>
 
 We keep all continued variables as is. The discrete ones are transformed into dummy variables and excluded (the discrete versions).
 
@@ -13,8 +47,10 @@ We take 5000 samples:
 - 1000 of them are kept to train our predictors: logistic regression and random forest. 
 - To do some testing, 700 of them were taken (possibly the same, but the ratio seems low enough to prevent overfitting).
 
+Results incoming.
 
-<b>2nd method</b>
+
+<h5>2nd method</h5>
 
 The 'hourly wage' variable is a huge bias. 95% of the dataset has 0$ as a wage, which is highly improbable. Thus, in a second method, I take only the rows where it is not zero. But it is a bias as well, that does not represent jobless people. The logistic regression predictor seems to overcome that second bias: its accuracy stands when we try it against original data (with a lot of hourly wage = 0). Excluding those rows leaves about 11.000 rows.
 
@@ -34,22 +70,46 @@ We then take the first 1000 samples (which were previously shuffled) and use the
 
 The cross-validated results can be seen in detail in the file 'uscensus/Results'. For the testing operation, we have to consider two cases: test the predictor with 'hourly wage>0' testing data only or not. 
 
-hourly wage>0
 If we restrict on those who had a hourly wage superior to zero, we have the following results:
 <table>
 <tr>
-  <th></th><th>Logistic regression</th><th>Random forest</th>
+  <th></th><th>Logistic regression</th><th>Random forest</th><th>SVM</th><th>Prediction tree</th>
 </tr>
 <tr>
-  <th>Sensitivity</th><th>0.9651</th><th>0.9566</th>
+  <th>Sensitivity</th><th>0.9651</th><th>0.9633</th><th>0.9597</th><th>0.9551 </th>
+</tr>
+<tr>
+  <th>Specificity</th><th>0.3636</th><th>0.3835</th><th> 0.5385</th><th>NA</th>
+</tr>
+<tr>
+  <th>Pos Pred Value</th><th>0.9630 </th><th>0.9846</th><th>0.9955</th><th>NA</th>
+</tr>
+<tr>
+  <th>Neg Pred Value</th><th>0.3774 </th><th>0.2032</th><th>0.1116</th><th>NA</th>
+</tr>
+<tr>
+  <th>Balanced Accuracy</th><th>0.6644 </th><th>0.6734</th><th>0.7491</th><th>NA</th>
 </tr>
 </table>
 
+Note: 'Positive class' here is '-50000'.
+'Accuracy' is not very relevant (always around 95%) because in the data 95% is <$50.000, then a naive guessing (always predict -50000) is enough to reach that score. 'Balanced accurency' is better.
+
+We can see that the prediction tree here always predicts '-50000', it's not very effective. The other algorithms do relatively well, especially SVM. Its 'specificity' score is quite good, that means it manages to get a lot (50%...) of 50000+ right, even though they are rare.
+
+If we test the predictor against the entire dataset (incl. wage=0) we naturally get a lower balanced accuracy, about 60% for random forest and logistic regression and 63% for SVM (here again, prediction tree doesn't predict 50000+).
 
 
 
 
 
+
+
+<h5>3rd method</h5>
+- Delete (class work == Not in universe) instead of (hourly wage == 0). Maybe it will suffice to delete the population which did not answered for the wage, and keep those who answered 0 (note: unpaid and not working people are categories of "work class").
+- Reintroduce variable capital losses: a variable analysis shows that 50000+ population has larger losses than 50000- population. Doing capital gains minus losses could lead to values close to zero, misclassifying them to 50000-. But an individual with gains and losses, even if they balance, has more chance to be in the 50000+ category.
+
+Results incoming
 
 
 === Extract from census_income_metadata.txt ===
