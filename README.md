@@ -125,10 +125,44 @@ Balanced accuracy with SVM polynomial kernel (3rd degree) : 0.5504  ==> This per
 If we use the same predictor against a dataset which includes the (class work == Not in universe) deleted in the training step, we obtain: 0.5542. 
 
 
+<h5>4th method</h5>
+
+Here we follow the 2nd method, as it is the method which gave the best results thus far. This method tests 4 cases: training and testing with or without the V5 variable (wage).
+
+Balanced accuracy
+<table>
+<tr>
+  <th></th><th>Tested with V5>0</th><th>Tested on all V5</th>
+  <th>Trained with V5>0</th><th>0.62</th><th>0.49</th>
+  <th>Trained on all V5</th><th>0.56</th><th>0.88</th>
+</tr>
+</table>
+
+Finally, removing the wage variable seemed like a bad idea, even though its dispersion is flawed.      
+
+
 <h5>Conclusion</h5>
 
 The 2nd method has a good efficiency but it does not adress every row of the testing set. As seen in the 3rd method, when we take every wage in parameter, that leads to a high bias that other variables tuning doesn't help to reduce. Again, 95% of hourly wage at zero looks suspicious. 
-63% is the better score I got, with method 2, trained with hourly wage >0, tested against the whole dataset.
+88% is the better score I got, with method 4, trained with hourly wage >0 and =0, tested against the whole dataset (i.e. including the V5 variable). Here is the detailed result of this model, tested against the testing dataset (not the cross-validation dataset issued from the training set) disregarding the V5 variable. The result is still pretty good.
+
+Prediction   - 50000.  50000+.
+   - 50000.     92293     1283
+   50000+.       4741     1445
+                                          
+               Accuracy : 0.9396          
+                 95% CI : (0.9381, 0.9411)
+    No Information Rate : 0.9727          
+    P-Value [Acc > NIR] : 1                
+                                          
+            Sensitivity : 0.9511          
+            Specificity : 0.5297          
+         Pos Pred Value : 0.9863          
+         Neg Pred Value : 0.2336          
+             Prevalence : 0.9727          
+         Detection Rate : 0.9251          
+   Detection Prevalence : 0.9380          
+      Balanced Accuracy : 0.7404 
 
 
 
