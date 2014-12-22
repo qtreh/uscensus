@@ -1,3 +1,5 @@
+# Le code ce-dessous n'est pas optimisé ni propre, il reflète ma démarche.
+
 # TRAINING - 3e essai
 
 # Suppression de la variable "instance weight"
@@ -50,6 +52,7 @@ for(i in 1:146)
 	names(training2)[i] <- paste("V",(i-1),sep="")
 }
 
+# Etant donné le peu d'individus >50k, une vraie cross-validation n'aurait pas beaucoup plus de valeur
 cv <- training2[1000:dim(training2)[1],]
 training2 <- training2[1:1000,]
 
