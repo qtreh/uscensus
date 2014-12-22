@@ -1,3 +1,5 @@
+# Le code ce-dessous n'est pas optimisé ni propre, il reflète simplement ma démarche.
+
 # TRAINING - 2nd essai
 
 # Suppression de la variable "instance weight"
@@ -52,6 +54,7 @@ for(i in 1:146)
 
 # /!\ Après l'apprentissage, cv doit être construit en reprenant tout le code ci dessus sans 
 # la ligne où l'on filtre suivant training1$V5 si l'on veut un score sur le set entier
+# Etant donné le peu d'individus >50k, une vraie cross-validation n'aurait pas beaucoup plus de valeur
 cv <- training2
 training2 <- training2[1:1000,]
 
