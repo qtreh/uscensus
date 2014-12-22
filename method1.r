@@ -1,8 +1,8 @@
+# Le code ce-dessous n'est pas optimisé ni propre, il reflète ma démarche.
 library(caret)
 training <- read.csv("census_income_learn.csv",header=FALSE)
 
 # TRAINING - 1er essai
-
 # Toutes les variables continues + Variables nominales transformées
 
 training1 <- training[sample(nrow(training)),]
@@ -21,11 +21,11 @@ A <- A[,-1]
 training2 <- cbind(training1,A)
 nums <- sapply(training2[1,], is.numeric)
 training2 <- cbind(training2[,nums],training2[,42])
+# Etant donné le peu d'individus >50k, une vraie cross-validation n'aurait pas beaucoup plus de valeur
 cv <- training2
 training2 <- training2[1:1000,]
 
 logReg1000 <- train(training2[,-386], training2[,386],method="LogitBoost",tuneGrid=NULL,prox=TRUE,na.action=na.omit)
-
 rf1000 <- train(training2[,-386], training2[,386],method="rf",tuneGrid=NULL,tuneLength=3,weights=NULL,data=training2,prox=TRUE,na.action=na.omit)
 
 cv <- cv[sample(nrow(cv)),]
